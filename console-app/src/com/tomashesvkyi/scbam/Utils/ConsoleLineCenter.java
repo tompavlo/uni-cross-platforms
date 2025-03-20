@@ -1,9 +1,10 @@
+package com.tomashesvkyi.scbam.Utils;
+
 import java.util.Scanner;
 
 public class ConsoleLineCenter {
 
-    static Scanner scanner = new Scanner(System.in);
-    static void printGreetings() {
+    public static void printGreetings() {
         System.out.println("―――――――――――――――――");
         System.out.println("|\u001B[31m  AUTHORIZE USAGE ONLY  \u001B[0m|");
         System.out.println("|------------------------|");
@@ -19,7 +20,7 @@ public class ConsoleLineCenter {
         System.out.println();
     }
 
-    static void fakeLoad() {
+    public static void fakeLoad() {
         try {
             Thread.sleep(1000);
             System.out.println("Loading...");
@@ -31,49 +32,53 @@ public class ConsoleLineCenter {
             System.out.println("100%");
             Thread.sleep(300);
             System.out.println();
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    static void printChooseMenuClients() {
-        System.out.println("――――――――――――――――――");
-        System.out.println("|      Choose option      |");
-        System.out.println("|-------------------------|");
-        System.out.println("|1. Show list of clients  |");
-        System.out.println("|2. Find clients          | ");
-        System.out.println("|3. Add clients           |");
-        System.out.println("|4. Sort clients          |");
-        System.out.println("|5. Exit                  |");
-        System.out.println("――――――――――――――――――");
+    public static void printChooseMenuClients() {
+        System.out.println("――――――――――――――――――――");
+        System.out.println("|        Choose option        |");
+        System.out.println("|-----------------------------|");
+        System.out.println("|1. Show list of clients      |");
+        System.out.println("|2. Find clients              |");
+        System.out.println("|3. Add clients               |");
+        System.out.println("|4. Sort clients              |");
+        System.out.println("|5. Work with current client  |");
+        System.out.println("|6. Save                      |");
+        System.out.println("|7. Exit                      |");
+        System.out.println("――――――――――――――――――――");
         System.out.print("|Choose an option:");
     }
 
-    static void clearConsole(){
+    public static void clearConsole() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
     }
 
-    static void freezeOutput(){
+    public static void freezeOutput() {
         System.out.println("Press Enter to continue...");
-        scanner.nextLine();
+        Scanner localScanner = new Scanner(System.in);
+        localScanner.nextLine();
 
     }
 
-    static boolean askToAnotherOne(){
+    public static boolean askToAnotherOne() {
         System.out.println("You want add another one?(true or false)");
-        return scanner.nextBoolean();
+        Scanner localScanner = new Scanner(System.in);
+        return localScanner.nextBoolean();
     }
 
-    static int askHowToFind(){
+    public static int askHowToFind() {
         System.out.println("|1.Find by name           |");
         System.out.println("|2.Find by ID             |");
-        return scanner.nextInt();
+        Scanner localScanner = new Scanner(System.in);
+        return localScanner.nextInt();
     }
 
-    static int askHowToSort(){
+    public static int askHowToSort() {
         System.out.println("―――――――――――――――――――――――――――――――――――");
         System.out.println("|\u001B[31m  ATTENTION! SORTING WILL CHANGE THE ID OF CLIENTS  \u001B[0m|");
         System.out.println("|1.Sort by name ASC                                  |");
@@ -82,7 +87,20 @@ public class ConsoleLineCenter {
         System.out.println("|4.Sort by money DESC                                |");
         System.out.println("|5.Sort by total transactions ASC                    |");
         System.out.println("|6.Sort by total transactions DESC                   |");
-        return scanner.nextInt();
+        Scanner localScanner = new Scanner(System.in);
+        return localScanner.nextInt();
+    }
+
+    public static int askWhatToDoWithClient() {
+        System.out.println("|1. Delete current client |");
+        System.out.println("|2. Show all transactions |");
+        System.out.println("|3. Withdraw              |");
+        System.out.println("|4. Replenishment         |");
+
+        Scanner localScanner = new Scanner(System.in);
+        int result = localScanner.nextInt();
+        if(result<1 || result>4) return askWhatToDoWithClient();
+        else return result;
     }
 
 }

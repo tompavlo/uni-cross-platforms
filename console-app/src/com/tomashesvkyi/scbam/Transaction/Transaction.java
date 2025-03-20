@@ -1,3 +1,5 @@
+package com.tomashesvkyi.scbam.Transaction;
+
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -15,7 +17,7 @@ public class Transaction {
     public String toString() {
         return STR."""
 Date of operation: \{dateOfOperation.toString()}
-Transaction type: \{transactionType.name()}
+Transaction.Transaction type: \{transactionType.name()}
 Amount: \{amount}""";
     }
 }

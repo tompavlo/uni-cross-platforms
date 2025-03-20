@@ -1,12 +1,25 @@
+package com.tomashesvkyi.scbam.Client;
+
+import com.tomashesvkyi.scbam.Transaction.Transaction;
+import com.tomashesvkyi.scbam.Transaction.TransactionType;
+
 import java.util.ArrayList;
 
 public class Client {
     ArrayList<Transaction> transactions = new ArrayList<>();
-    String nameOfClient;
-    double amountOfMoney;
+    private String nameOfClient;
+    private double amountOfMoney;
 
     public String getNameOfClient() {
         return nameOfClient;
+    }
+
+    public double getAmountOfMoney() {
+        return amountOfMoney;
+    }
+
+    public int getTransactionsSize() {
+        return transactions.size();
     }
 
     public Client(String name, double money){

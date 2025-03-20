@@ -1,7 +1,12 @@
+package com.tomashesvkyi.scbam;
+
+import com.tomashesvkyi.scbam.Client.ClientRepository;
+import com.tomashesvkyi.scbam.Utils.ConsoleLineCenter;
+
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Scanner command = new Scanner(System.in);
         ClientRepository clientRepository = new ClientRepository();
         ConsoleLineCenter.printGreetings();
@@ -22,19 +27,17 @@ public class Main {
                         System.out.println("Enter full name");
                         if (!clientRepository.findByName(command.nextLine())) {
                             System.out.println("Incorrect name");
-                        }
-                        //TODO
-                        else {
-
+                        } else {
+                            clientRepository.printCurClient();
+                            clientRepository.decideWhatToDoWithClient(ConsoleLineCenter.askWhatToDoWithClient());
                         }
                     } else if (howToFind == 2) {
                         System.out.println("Enter ID");
                         if (!clientRepository.findById(command.nextInt())) {
                             System.out.println("Incorrect ID");
-                        }
-                        //TODO
-                        else{
-
+                        } else {
+                            clientRepository.printCurClient();
+                            clientRepository.decideWhatToDoWithClient(ConsoleLineCenter.askWhatToDoWithClient());
                         }
                     } else {
                         System.out.println("Incorrect input!");
@@ -52,27 +55,43 @@ public class Main {
                     ConsoleLineCenter.printChooseMenuClients();
                     break;
                 case "4":
-                   int chosen = ConsoleLineCenter.askHowToSort();
-                   if(chosen>6){
-                       System.out.println("Incorrect input!");
-                   }
-                   else{
-                       clientRepository.chooserOfSorting(chosen);
-                   }
+                    int chosen = ConsoleLineCenter.askHowToSort();
+                    if (chosen > 6) {
+                        System.out.println("Incorrect input!");
+                    } else {
+                        clientRepository.chooserOfSorting(chosen);
+                        System.out.println("Sorted");
+                    }
                     ConsoleLineCenter.freezeOutput();
                     ConsoleLineCenter.clearConsole();
                     ConsoleLineCenter.printChooseMenuClients();
                     break;
                 case "5":
+                    if (clientRepository.getCurrentClient() == null) {
+                        System.out.println("ERROR! NO CURRENT CLIENT");
+                    } else {
+                        clientRepository.printCurClient();
+                        clientRepository.decideWhatToDoWithClient(ConsoleLineCenter.askWhatToDoWithClient());
+                    }
+                    ConsoleLineCenter.freezeOutput();
+                    ConsoleLineCenter.clearConsole();
+                    ConsoleLineCenter.printChooseMenuClients();
+                    break;
+                case "6":
+                    break;
+                case "7":
                     running = false;
                     break;
                 default:
                     System.out.println("Incorrect input!");
                     System.out.println("Rebooting...");
-                    Thread.sleep(1000);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     ConsoleLineCenter.clearConsole();
                     ConsoleLineCenter.printChooseMenuClients();
-
 
             }
         }
