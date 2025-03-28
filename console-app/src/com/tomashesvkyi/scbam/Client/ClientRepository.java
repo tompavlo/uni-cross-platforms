@@ -1,16 +1,35 @@
 package com.tomashesvkyi.scbam.Client;
 
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomashesvkyi.scbam.Transaction.Transaction;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
+
 public class ClientRepository {
+
+
     ArrayList<Client> clientList = new ArrayList<>();
     Client curClient = null;
 
-    public ClientRepository(){};
+    public ArrayList<Client> getClientList() {
+        return clientList;
+    }
 
-    public void createClient(){
+    public void setClientList(ArrayList<Client> clientList) {
+        this.clientList = clientList;
+    }
+
+
+    public ClientRepository() {
+    }
+
+
+    public void createClient() {
         System.out.println("Enter name and surname of client");
         Scanner scanner = new Scanner(System.in);
         String clientName = scanner.nextLine();
@@ -20,18 +39,18 @@ public class ClientRepository {
         addClient(client);
     }
 
-    public Client getCurrentClient(){
+    public Client getCurrentClient() {
         return curClient;
     }
 
-    public void addClient(Client client){
+    public void addClient(Client client) {
         clientList.add(client);
     }
 
-    public void printAllClients(){
+    public void printAllClients() {
         int i = 1;
-        for(Client client : clientList){
-            System.out.println("№"+i);
+        for (Client client : clientList) {
+            System.out.println("№" + i);
             System.out.println("Name: " + client.getNameOfClient());
             System.out.println("Amount of money: " + client.getAmountOfMoney());
             ++i;
@@ -39,16 +58,15 @@ public class ClientRepository {
     }
 
 
-
-    public void decideWhatToDoWithClient(int nav){
+    public void decideWhatToDoWithClient(int nav) {
         Scanner localScanner = new Scanner(System.in);
-        switch (nav){
+        switch (nav) {
             case 1:
                 clientList.remove(curClient);
                 curClient = null;
                 break;
             case 2:
-                for(Transaction transaction : curClient.transactions){
+                for (Transaction transaction : curClient.transactions) {
                     System.out.println(transaction.toString());
                 }
                 break;
@@ -57,7 +75,7 @@ public class ClientRepository {
                 do {
                     System.out.println("Input amount to withdraw");
                     amount = localScanner.nextDouble();
-                } while (amount > curClient.getAmountOfMoney() || amount <0);
+                } while (amount > curClient.getAmountOfMoney() || amount < 0);
                 curClient.withdraw(amount);
                 System.out.println("$" + amount + " were successfully withdrawed");
                 System.out.println("Current balance " + curClient.getAmountOfMoney());
@@ -75,18 +93,17 @@ public class ClientRepository {
         }
     }
 
-    public boolean findById(int id){
-        if(id-1>=clientList.size()){
+    public boolean findById(int id) {
+        if (id - 1 >= clientList.size()) {
             return false;
-        }
-        else {
+        } else {
             curClient = clientList.get(id - 1);
-            System.out.println("Your current clients is "+ curClient.getNameOfClient());
+            System.out.println("Your current clients is " + curClient.getNameOfClient());
             return true;
         }
     }
 
-    public boolean findByName(String name){
+    public boolean findByName(String name) {
         for (Client client : clientList) {
             if (client.getNameOfClient().equals(name)) {
                 System.out.println("Your client was successfully found!");
@@ -97,13 +114,13 @@ public class ClientRepository {
         return false;
     }
 
-    public void printCurClient(){
+    public void printCurClient() {
         System.out.println(curClient.getNameOfClient());
         System.out.println("Total money: " + curClient.getAmountOfMoney());
     }
 
-    public void chooserOfSorting(int option){
-        switch (option){
+    public void chooserOfSorting(int option) {
+        switch (option) {
             case 1:
                 clientList.sort(Comparator.comparing(Client::getNameOfClient));
                 break;

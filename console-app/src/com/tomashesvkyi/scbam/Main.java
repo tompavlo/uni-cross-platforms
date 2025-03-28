@@ -2,15 +2,26 @@ package com.tomashesvkyi.scbam;
 
 import com.tomashesvkyi.scbam.Client.ClientRepository;
 import com.tomashesvkyi.scbam.Utils.ConsoleLineCenter;
+import com.tomashesvkyi.scbam.jsonmapper.JsonMapper;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner command = new Scanner(System.in);
         ClientRepository clientRepository = new ClientRepository();
+        JsonMapper jsonMapper = new JsonMapper(clientRepository);
         ConsoleLineCenter.printGreetings();
         ConsoleLineCenter.fakeLoad();
+        try{
+            jsonMapper.load();
+            System.out.println("Data was successfully loaded!");
+        }
+        catch (IOException e){
+            System.out.println("Error while loading data " + e.getMessage());
+            System.exit(-1);
+        }
         ConsoleLineCenter.printChooseMenuClients();
         boolean running = true;
         while (running) {
@@ -78,6 +89,16 @@ public class Main {
                     ConsoleLineCenter.printChooseMenuClients();
                     break;
                 case "6":
+                    try {
+                        jsonMapper.save();
+                        System.out.println("Data was successfully write!");
+                    }
+                    catch (IOException e){
+                        System.out.println("Failed to save " + e.getMessage());
+                    }
+                    ConsoleLineCenter.freezeOutput();
+                    ConsoleLineCenter.clearConsole();
+                    ConsoleLineCenter.printChooseMenuClients();
                     break;
                 case "7":
                     running = false;

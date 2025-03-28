@@ -1,5 +1,6 @@
 package com.tomashesvkyi.scbam.Client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tomashesvkyi.scbam.Transaction.Transaction;
 import com.tomashesvkyi.scbam.Transaction.TransactionType;
 
@@ -10,6 +11,22 @@ public class Client {
     private String nameOfClient;
     private double amountOfMoney;
 
+    public void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void setNameOfClient(String nameOfClient) {
+        this.nameOfClient = nameOfClient;
+    }
+
+    public void setAmountOfMoney(double amountOfMoney) {
+        this.amountOfMoney = amountOfMoney;
+    }
+
+    public ArrayList<Transaction> getTransactions(){
+        return transactions;
+    }
+
     public String getNameOfClient() {
         return nameOfClient;
     }
@@ -18,6 +35,7 @@ public class Client {
         return amountOfMoney;
     }
 
+    @JsonIgnore
     public int getTransactionsSize() {
         return transactions.size();
     }
@@ -26,6 +44,8 @@ public class Client {
         nameOfClient = name;
         amountOfMoney = money;
     }
+
+    public Client(){}
 
     public void withdraw(double amount){
         transactions.add(new Transaction(TransactionType.WITHDRAW, amount));
