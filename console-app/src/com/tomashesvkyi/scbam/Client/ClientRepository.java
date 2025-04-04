@@ -1,12 +1,9 @@
 package com.tomashesvkyi.scbam.Client;
 
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomashesvkyi.scbam.Transaction.Transaction;
+import com.tomashesvkyi.scbam.jsonmapper.JsonMapper;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 
@@ -15,6 +12,7 @@ public class ClientRepository {
 
     ArrayList<Client> clientList = new ArrayList<>();
     Client curClient = null;
+    JsonMapper jsonMapper;
 
     public ArrayList<Client> getClientList() {
         return clientList;
@@ -25,7 +23,8 @@ public class ClientRepository {
     }
 
 
-    public ClientRepository() {
+    public ClientRepository(JsonMapper jsonMapper) {
+        this.jsonMapper = jsonMapper;
     }
 
 

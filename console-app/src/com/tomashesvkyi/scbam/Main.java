@@ -1,5 +1,7 @@
 package com.tomashesvkyi.scbam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tomashesvkyi.scbam.Client.ClientRepository;
 import com.tomashesvkyi.scbam.Utils.ConsoleLineCenter;
 import com.tomashesvkyi.scbam.jsonmapper.JsonMapper;
@@ -8,14 +10,17 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    public static final String FILE_LOCATION = "src/resources/clients.json";
+
     public static void main(String[] args) {
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         Scanner command = new Scanner(System.in);
-        ClientRepository clientRepository = new ClientRepository();
-        JsonMapper jsonMapper = new JsonMapper(clientRepository);
+        JsonMapper jsonMapper = new JsonMapper(FILE_LOCATION, objectMapper);
+        ClientRepository clientRepository = new ClientRepository(jsonMapper);
         ConsoleLineCenter.printGreetings();
         ConsoleLineCenter.fakeLoad();
         try{
-            jsonMapper.load();
+            jsonMapper.load(clientRepository);
             System.out.println("Data was successfully loaded!");
         }
         catch (IOException e){
@@ -90,7 +95,7 @@ public class Main {
                     break;
                 case "6":
                     try {
-                        jsonMapper.save();
+                        jsonMapper.save(clientRepository);
                         System.out.println("Data was successfully write!");
                     }
                     catch (IOException e){
