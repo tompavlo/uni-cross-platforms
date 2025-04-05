@@ -1,0 +1,30 @@
+@import tompavlo.uni.scbam.Person
+@import java.time.LocalTime
+@param person: Person
+@param time: LocalTime
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+!{val time:LocalTime = LocalTime.now() }
+<body>
+<p style="text-align: center">@if(time.hour<10)0@endif ${time.hour} :@if(time.minute<10)0 @endif ${time.minute}</p>
+<h2>@if(time.hour in 11..17)Good day,
+    @elseif(time.hour in 18..20)Good evening,
+    @elseif(time.hour in 6..10) Good morning
+    @else Goodnight,
+    @endif
+    ${person.name}!</h2>
+<%-- Some motivational quotes --%>
+@for(i in 1..3)<p style="font-size: 20px">Remember, do what you supposed to do!</p>@endfor
+@template.ask(goodMood = true)
+@template.todo("Blind typing practice 30 min", "English course")
+@template.footer(footer =@` <h3><br> Have a productive day! </h3>`)
+</body>
+</html>

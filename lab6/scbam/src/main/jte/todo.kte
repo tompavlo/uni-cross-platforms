@@ -1,0 +1,3 @@
+@param vararg tasks: String
+ <h3>Tasks for today:</h3>
+@for(task in tasks)<p style="font-size: 18px">${task}</p>@endfor

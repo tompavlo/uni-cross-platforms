@@ -1,0 +1,8 @@
+@import gg.jte.Content
+
+@param footer: Content
+
+<div class="footer" style="text-align: center">
+    ${footer}
+</div>
+

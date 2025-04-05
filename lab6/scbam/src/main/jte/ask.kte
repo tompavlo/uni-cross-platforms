@@ -1,0 +1,3 @@
+@param goodMood: Boolean = true
+
+@if(goodMood)<h3>Hope you're doing fine!</h3>@endif
