@@ -1,0 +1,68 @@
+@import com.lab7.tomash.entities.Department
+@import com.lab7.tomash.entities.Employee
+
+@param departments: Iterable<Department>
+@param employees: Iterable<Employee>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 7</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+
+@if (departments.any())
+    <ul>
+        @for (dept in departments)
+            <li>
+                <strong>ID:</strong> ${dept.id}
+                -
+                <strong>Name:</strong> ${dept.name}
+            </li>
+        @endfor
+    </ul>
+@else
+    <p class="no-data">No departments found in the database.</p>
+@endif
+
+@if (employees.any())
+    <ul>
+        @for (emp in employees)
+            <li>
+                <strong>ID:</strong> ${emp.id}
+                -
+                <strong>Name:</strong> ${emp.name}
+                -
+                <strong>Department:</strong> ${emp.department.name}
+            </li>
+        @endfor
+    </ul>
+@else
+    <p class="no-data">No departments found in the database.</p>
+@endif
+
+
+</body>
+</html>

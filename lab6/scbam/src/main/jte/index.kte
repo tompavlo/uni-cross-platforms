@@ -1,7 +1,7 @@
 @import tompavlo.uni.scbam.Person
 @import java.time.LocalTime
 @param person: Person
-@param time: LocalTime
+@param timeParsed: LocalTime
 
 <!doctype html>
 <html lang="en">
@@ -14,10 +14,10 @@
 </head>
 !{val time:LocalTime = LocalTime.now() }
 <body>
-<p style="text-align: center">@if(time.hour<10)0@endif ${time.hour} :@if(time.minute<10)0 @endif ${time.minute}</p>
-<h2>@if(time.hour in 11..17)Good day,
-    @elseif(time.hour in 18..20)Good evening,
-    @elseif(time.hour in 6..10) Good morning
+<p style="text-align: center">@if(time.hour<10)0@endif${time.hour}:@if(time.minute<10)0@endif${time.minute}</p>
+<h2>@if(timeParsed.hour in 11..17)Good day,
+    @elseif(timeParsed.hour in 18..20)Good evening,
+    @elseif(timeParsed.hour in 6..10) Good morning
     @else Goodnight,
     @endif
     ${person.name}!</h2>

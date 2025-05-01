@@ -13,7 +13,7 @@ class IndexController {
         val time = LocalTime.now()
 
         model.addAttribute("person", person)
-        model.addAttribute("time", time)
+        model.addAttribute("timeParsed", time)
         return "index"
     }
 }
