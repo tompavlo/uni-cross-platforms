@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "cross-platform",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
