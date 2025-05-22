@@ -15,18 +15,20 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
-
+class SecurityConfig(
+    private val successLoginHandler: SuccessLoginHandler,
     @Autowired
-    private lateinit var userService: UserService
+    private var userService: UserService
+) {
+
 
     @Bean
-    fun userDetailService(): UserDetailsService{
+    fun userDetailService(): UserDetailsService {
         return userService
     }
 
     @Bean
-    fun authenticationProvider(): AuthenticationProvider{
+    fun authenticationProvider(): AuthenticationProvider {
         val provider = DaoAuthenticationProvider()
         provider.setUserDetailsService(userService)
         provider.setPasswordEncoder(passwordEncoder())
@@ -34,22 +36,27 @@ class SecurityConfig {
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder{
+    fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
     }
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { it.disable() } //Spring Security blocks POST requests if CSRF protection is enabled and no token is sent.
+            .csrf { it.disable() }
             .authenticationProvider(authenticationProvider())
-            .authorizeHttpRequests { it
-                .requestMatchers("/register", "/login").permitAll()
-                .requestMatchers("/user/**").hasRole("CLIENT")
-                .requestMatchers("/accountant/**").hasRole("ACCOUNTANT")
-                .anyRequest().authenticated()
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers("/register", "/login").permitAll()
+                    .requestMatchers("/client/**").hasRole("CLIENT")
+                    .requestMatchers("/accountant/**").hasRole("ACCOUNTANT")
+                    .anyRequest().authenticated()
             }
-            .formLogin { it.loginPage("/login").permitAll() }
+            .formLogin {
+                it.loginPage("/login")
+                    .successHandler(successLoginHandler)
+                    .permitAll()
+            }
             .logout { it.logoutSuccessUrl("/login") }
         return http.build()
     }

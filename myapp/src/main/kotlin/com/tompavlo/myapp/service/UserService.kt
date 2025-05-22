@@ -24,7 +24,7 @@ class UserService : UserDetailsService {
         return org.springframework.security.core.userdetails.User(
             user.name,
             user.password,
-            listOf(SimpleGrantedAuthority(user.role.name))
+            listOf(SimpleGrantedAuthority(user.role.roleName))
         )
     }
 }

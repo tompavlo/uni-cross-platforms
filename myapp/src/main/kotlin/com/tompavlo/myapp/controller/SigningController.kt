@@ -1,7 +1,7 @@
 package com.tompavlo.myapp.controller
 
 import com.tompavlo.myapp.Roles
-import com.tompavlo.myapp.dto.RegisterDto
+import com.tompavlo.myapp.dto.AuthenticationDto
 import com.tompavlo.myapp.entity.User
 import com.tompavlo.myapp.entity.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,7 +20,7 @@ class SigningController {
     private lateinit var passwordEncoder: PasswordEncoder
 
     @PostMapping(value = ["/register"], consumes = ["application/json"])
-    fun createUser(@RequestBody request: RegisterDto): User{
+    fun createUser(@RequestBody request: AuthenticationDto): User{
         val encodedPassword = passwordEncoder.encode(request.password)
         val user = User(0, request.name, encodedPassword, Roles.CLIENT)
         return userRepository.save(user)

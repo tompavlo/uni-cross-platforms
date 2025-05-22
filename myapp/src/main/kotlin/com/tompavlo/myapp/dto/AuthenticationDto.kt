@@ -1,6 +1,6 @@
 package com.tompavlo.myapp.dto
 
-data class RegisterDto (
+data class AuthenticationDto (
     val name: String,
     val password: String
 )
